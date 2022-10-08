@@ -46,7 +46,7 @@ async def sch_check():
                 status = False
         if server_status:
             print_str = "Close" if num==0 else "Open"
-            print(f"[{time.strftime('%H:%M:%S')}] {server_name}: Num = {print_str}")
+            print(f"[{time.strftime('%H:%M:%S')}] {server_name}: Status = {print_str}")
             if num==0:
                 switch_status = True
         elif status != server_status:

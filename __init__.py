@@ -1,4 +1,5 @@
 import time
+from turtle import title
 from nonebot import get_driver, on_message, on_notice
 from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Bot, Event
@@ -124,7 +125,8 @@ async def command_tips(bot:Bot,event:MessageEvent):
         time.sleep(random_time_num())
         try:
             group_id: str = str(event.group_id)
-            str_command = """-----所有指令之前均需要打\"/\"-----
+            title_str = "所有指令之前均需要打\"/\"".center(23,"=")
+            str_command = f"""{title_str}
 [CQ:face,id=54]管理员指令 | [CQ:face,id=168]群成员指令
 [CQ:face,id=54]测试机器人状态：测试
 [CQ:face,id=54]查询机器人状态：状态
