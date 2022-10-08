@@ -112,7 +112,7 @@ class bt_api:
 
 
 def server_ip_check(server_name,server_ip):
-    ser_name = '\n' + "---" + server_name + "---"
+    ser_name = '\n' + server_name.center(17,"-")
     try:
         player_omline = MinecraftServer.lookup(server_ip).status().players.online
         player_max = MinecraftServer.lookup(server_ip).status().players.max
@@ -159,7 +159,7 @@ def server_status_check(group_panel,group_key,group_disk):
         server_data = '负载状态:{}% - <{}>'.format(load_now,load_level)+'\n'+'CPU使用率:{:.1f}%'.format(cpu_now)+'\n'+\
         "内存使用率:{:.1f}%".format(mem_now)+'\n'+'硬盘使用率:{}/{}'.format(disk_now[1],disk_now[0]) + "\n===================="
     except:
-        server_data = "服务器状态未知"
+        server_data = "物理机状态未知".center(17,"=")
 
     # server_data = r_data
     return server_data
@@ -178,14 +178,13 @@ def status(group_id):
         # print(group_server_list)
     except:
         print('没有该群号信息')
-        return '没有该群号信息'
+        return '没有该群号信息'.center(17,"=")
 
     #========整合信息========
 
     server_status = str()
 
-    
-    server_status = server_status + '====服务器状态查询====\n' + server_status_check(group_panel,group_key,group_disk)
+    server_status = server_status + '服务器状态查询'.center(17,"=") + '\n' + server_status_check(group_panel,group_key,group_disk)
 
     for each_ip in group_server_list:
         server_status = server_status + server_ip_check(each_ip['服务器名称'],each_ip['ip'])

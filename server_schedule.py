@@ -30,6 +30,8 @@ async def sch_check():
         switch_status = False
         while(i<3):
             i+=1
+            if num==0:
+                time.sleep(3)   #检测间隔3秒
             try:
                 ping = await MinecraftServer.lookup(server_ip).async_ping()
                 ping = round(ping,3)
@@ -43,7 +45,8 @@ async def sch_check():
                 player_status = "None"
                 status = False
         if server_status:
-            print(f"[{time.strftime('%H:%M:%S')}] {server_name}: Num = {str(num)}")
+            print_str = "Close" if num==0 else "Open"
+            print(f"[{time.strftime('%H:%M:%S')}] {server_name}: Num = {print_str}")
             if num==0:
                 switch_status = True
         elif status != server_status:
@@ -51,19 +54,20 @@ async def sch_check():
         if switch_status:
             server_status = status
             ser_each["status"] = server_status
+            title_str = "服务器状态发生变化".center(17,"=")
             for bot in bots:
                 for group_id_each in server_notice_group:
                     try:
                         await bots[bot].send_msg(
                         group_id = int(group_id_each),
                         message=(
-                            "<<服务器状态发生变化>>\n"
+                            f"{title_str}\n"
                             + f"时间：{time.strftime('%H:%M:%S')}\n"
                             + f"服务器名称: {server_name}\n"
                             + f"IP地址: {server_ip}\n"
                             + f"当前状态: {'运行中' if status else '已关闭'}"
                             + (f"\n在线人数: {player_status}" if status else "")
-                            + (f"\n延迟: {ping}" if status else "")
+                            + "\t" + (f"延迟: {ping}" if status else "")
                             )
                         )
                     except:
